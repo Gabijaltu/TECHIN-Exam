@@ -1,50 +1,49 @@
 import { useForm } from "react-hook-form";
 import { post } from "../helpers/post";
 import { useState, useEffect } from "react";
+import { putData } from "../helpers/update";
 import { useNavigate } from "react-router";
-import { useItemContext } from "../context/ItemContext";
 
-const ItemCreationForm = () => {
+const ItemCreationForm = ({ item }) => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  // const [categories, setCategories] = useState([]); // to double check if categories need to be mapped
-
-  const { items } = useItemContext();
-
-  // const categories = [
-  //   ...new Set(items.map((item) => item.category).toSorted()),
-  // ];
-
-  // useEffect(() => {
-  //   const getCategories = async () => {
-  //     try {
-  //       const data = await get("/categories");
-  //       setCategories(data);
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   };
-
-  //   getCategories();
-  // }, []);
 
   const {
     register,
+    setValue,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
   const formSubmitHandler = async (data) => {
-    data.dates = data.dates.split(",").map((date) => date.trim());
-
-    try {
-      console.log(data);
-      await post(data);
-      navigate("/");
-    } catch (error) {
-      setError(error.message);
+    if (!item) {
+      try {
+        console.log(data);
+        await post(data);
+        navigate("/");
+      } catch (error) {
+        setError(error.message);
+      }
+    } else {
+      try {
+        await putData(item.id, data);
+        navigate("/");
+      } catch (error) {
+        setError(error.message);
+      }
     }
   };
+
+  useEffect(() => {
+    if (item) {
+      const { title, category, description, price, city } = item;
+      setValue("title", title);
+      setValue("category", category);
+      setValue("description", description);
+      setValue("price", price);
+      setValue("city", city);
+    }
+  }, [item]);
 
   return (
     <>
@@ -52,99 +51,61 @@ const ItemCreationForm = () => {
         className="pt-5 place-items-center "
         onSubmit={handleSubmit(formSubmitHandler)}
       >
-        {/* <label>Category</label> // if category mapping will be required
-      <select {...register("category", { required: "Category is required." })}>
-        <option value="">Select a category</option>
-        {categories.map((category) => (
-          <option key={category.id} value={category.name}>
-            {category.name}
-          </option>
-        ))}
-      </select>
-      <p className="text-red-500">{errors.category?.message}</p> */}
         <label
-          htmlFor="first_name"
+          htmlFor="title"
           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
         >
-          Name
+          Title
         </label>
         <input
           type="text"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 max-w-[50vw] "
-          placeholder="Trip in Vilnius"
-          {...register("name", {
-            required: "Please enter the name of the trip.",
+          placeholder="Car for sale.."
+          {...register("title", {
+            required: "Please enter the title",
             minLength: {
-              value: 3,
-              message: "Name must contain at least 3 characters.",
+              value: 2,
+              message: "Title must contain at least 3 characters.",
             },
             maxLength: {
               value: 100,
-              message: "Name can contain a maximum of 100 characters.",
+              message: "Title can contain a maximum of 100 characters.",
             },
           })}
         />
-        <p className="text-red-500">{errors.name?.message}</p>
+        <p className="text-red-500">{errors.title?.message}</p>
         <label
-          htmlFor="first_name"
+          htmlFor="description"
           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
         >
-          Category
-        </label>
-        <select
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 max-w-[50vw]"
-          id="category"
-          {...register("category", {
-            required: "Category is required.",
-          })}
-        >
-          <option label=" "></option>
-          {categories.map((category) => {
-            return (
-              <>
-                <option value={category}>{category}</option>
-              </>
-            );
-          })}
-        </select>
-        <p className="text-red-500">{errors.category?.message}</p>
-        <label
-          htmlFor="first_name"
-          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-        >
-          Image
+          Description
         </label>
         <input
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 max-w-[50vw]"
           type="text"
-          placeholder="Image URL..."
-          {...register("image", {
-            required: "Please enter URL of the cover.",
-            pattern: {
-              value:
-                /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/,
-              message: "Invalid image URL.",
-            },
+          placeholder="A very nice car for sale.."
+          {...register("description", {
+            required: "Please enter the description.",
           })}
         />
-        <p className="text-red-500">{errors.image?.message}</p>
+        <p className="text-red-500">{errors.description?.message}</p>
         <label
-          htmlFor="first_name"
+          htmlFor="city"
           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
         >
-          Duration
+          City
         </label>
         <input
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 max-w-[50vw]"
           type="text"
-          placeholder="1h 30min / 1 day / 10 days / 2 weeks etc.."
-          {...register("duration", {
-            required: "Please enter the duration.",
+          placeholder="Vilnius.."
+          {...register("city", {
+            required: "Please enter the city name.",
           })}
         />
-        <p className="text-red-500">{errors.duration?.message}</p>
+        <p className="text-red-500">{errors.city?.message}</p>
         <label
-          htmlFor="first_name"
+          htmlFor="price"
           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
         >
           Price
@@ -168,20 +129,21 @@ const ItemCreationForm = () => {
         />
         <p className="text-red-500">{errors.price?.message}</p>
         <label
-          htmlFor="first_name"
+          htmlFor="category"
           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
         >
-          Date(s)
+          Category
         </label>
         <input
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 max-w-[50vw]"
           type="text"
-          placeholder="Dates..."
-          {...register("dates", {
-            required: "Please enter the dates",
+          placeholder="Vehicles.."
+          {...register("category", {
+            required: "Please enter the category",
           })}
         />
-        <p>{errors.dates?.message}</p>
+        <p className="text-red-500">{errors.category?.message}</p>
+
         <p className="text-xs text-red-500 pt-1">*all fields are mandatory</p>
         <button
           type="submit"

@@ -1,18 +1,17 @@
-import axios from "axios";
-import { URL } from "../helpers/localhostURL"
+import api from "../utils/api";
 
 export const update = async (id, data) => {
-    const response = await axios.patch(`${URL}/${id}`, data)
+    const response = await api.patch(`/${id}`, data)
     return response.data;
 }
 
 export const putData = async (id, data) => {
-    const response = await axios.put(`${URL}/${id}`)
+    const response = await api.put(`/${id}`)
     return response.data;
 }
 
 export const updateStatus = async (id, status) => {
     const payload = { status };
-    const response = await axios.patch(`${URL}/api/items/${id}/review`, payload);
+    const response = await api.patch(`/ads_platform/${id}/review`, payload);
     return response.data;
   };

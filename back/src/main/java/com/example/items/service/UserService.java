@@ -24,4 +24,8 @@ public class UserService {
   public void saveUser(User user) {
     userRepository.save(user);
   }
+
+  public boolean existsByUsername(String username) {
+    return userRepository.existsByUsername(username);
+  }
 }

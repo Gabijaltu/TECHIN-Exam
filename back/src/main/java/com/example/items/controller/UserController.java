@@ -8,6 +8,7 @@ import com.example.items.model.User;
 import com.example.items.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -31,13 +32,19 @@ public class UserController {
 
   @PostMapping("/auth/register")
   public ResponseEntity<?> createUser(@Valid @RequestBody UserRequestDTO userRequestDTO) {
+    if (userService.existsByUsername(userRequestDTO.username())) {
+      // Return 409 Conflict if username already exists
+      return ResponseEntity
+              .status(HttpStatus.CONFLICT)
+              .body("Username already taken");
+    }
     User user = new User();
     user.setUsername(userRequestDTO.username());
     user.setPassword(passwordEncoder.encode(userRequestDTO.password()));
     user.setRoles(List.of(new Role(1)));
     userService.saveUser(user);
-
-    return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest()
+    return ResponseEntity
+            .created(ServletUriComponentsBuilder.fromCurrentRequest()
                     .path("/{id}")
                     .buildAndExpand(user.getId())
                     .toUri())
@@ -50,5 +57,4 @@ public class UserController {
 
     return ResponseEntity.ok(UserMapper.toLoginResponseDTO(user));
   }
-
 }

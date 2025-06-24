@@ -1,26 +1,23 @@
 import React, { createContext, useState, useEffect } from "react";
-import axios from "axios";
-import { URL } from "../helpers/localhostURL";
+import api from "../utils/api";
 
-// Create context with default values
 export const ItemContext = createContext(
   undefined
 );
 
-// Create provider component
 export function ItemProvider({ children }) {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  
 
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const response = await axios.get(`${URL}/api/items`);
-        
+        const response = await api.get(`/ads_platform`);
         setItems(response.data);
       } catch (err) {
-        setError("Failed to fetch items");
+        setError("fail");
       } finally {
         setLoading(false);
       }
@@ -29,18 +26,22 @@ export function ItemProvider({ children }) {
     fetchItems();
   }, []);
 
+
+  const removeItem = (id) => {
+    setItems((prevItems) => prevItems.filter((item) => item.id !== id));
+  };
+
   return (
-    <ItemContext.Provider value={{ items, loading, error }}>
+    <ItemContext.Provider value={{ items, loading, error, removeItem }}>
       {children}
     </ItemContext.Provider>
   );
 }
 
-// Custom hook to use context
 export const useItemContext = () => {
   const context = React.useContext(ItemContext);
   if (!context) {
-    throw new Error("useItemContext must be used within an ItemProvider");
+    throw new Error("useContext must be used within ItemContext");
   }
   return context;
 };

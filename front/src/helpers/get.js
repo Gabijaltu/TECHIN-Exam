@@ -1,23 +1,11 @@
-import axios from "axios";
-import { URL } from "../helpers/localhostURL"
+import api from "../utils/api";
 
 export const getAllData = async () => {
-  const response = await axios.get(URL);
+  const response = await api.get();
   return response.data;
 };
 
 export const getOne = async (id) => {
-  const response = await axios.get(`${URL}/${id}`);
+  const response = await api.get(`/${id}`);
   return response.data;
 };
-
-export const getMyTrips = async (user) => {
-  const response = await axios.get(`${URL}/my`, {
-    auth: {
-      username: user.username,
-      password: user.password,
-    },
-  });
-  console.log(response.data);
-  return response.data;
-}

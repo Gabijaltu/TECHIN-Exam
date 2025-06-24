@@ -21,29 +21,37 @@ export const AuthProvider = ({ children }) => {
     });
 
     const login = async (username, password) => {
-        // Paduodas username ir password axios
-        setAuth(username, password);
-        // Pasiimam priskirtas roles iš serverio
-        const response = await api.get("/auth/me");
-        const userData = response.data
-
-        // Sujungiam įrašyta username ir password su iš db gaunamomis roles
-        // Password iš serverio neteina, nes jis užšifruotas, todėl reikia daryti šį junginį
-        const user = {
-            username,
-            password,
-            roles: userData.roles
-        }
-        // Įšsaugome user info į localStorage, tam kad vėliau galėtu pasiimti axios ir šis context'as
-        localStorage.setItem("user", JSON.stringify(user));
-        setUser(user);
-        navigate("/");
+  try {
+    setAuth(username, password);
+    const response = await api.get("/auth/me");
+    const userData = response.data;
+    const user = {
+      username,
+      password,
+      roles: userData.roles,
     };
+
+    localStorage.setItem("user", JSON.stringify(user));
+    setUser(user);
+    navigate("/");
+  } catch (err) {
+    clearAuth();
+    localStorage.removeItem("user");
+    throw new Error("Invalid username or password");
+  }
+};
 
     const registerUser = async (username, password) => {
-        await api.post("/auth/register", { username, password });
-        navigate("/login");
-    };
+  try {
+    await api.post("/auth/register", { username, password });
+    navigate("/login");
+  } catch (err) {
+    if (err.response && err.response.status === 409) {
+      throw new Error("Username already exists.");
+    }
+    throw new Error("Registration failed. Please try again.");
+  }
+};
 
     const logout = () => {
         setUser(null);

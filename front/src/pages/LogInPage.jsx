@@ -15,7 +15,7 @@ const LogInPage = () => {
 
   const onSubmit = async (data) => {
     setLogIn(true);
-    setError("");
+    setError("Username or password is incorrect");
     login(data.username, data.password);
   };
 

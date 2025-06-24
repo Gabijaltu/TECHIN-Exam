@@ -1,6 +1,5 @@
-import axios from "axios";
-import { URL } from "../helpers/localhostURL"
+import api from "../utils/api";
 
 export const deleteItem = async (id) => {
-  await axios.delete(`${URL}/api/items/${id}`);
+  await api.delete(`/ads_platform/${id}`);
 };

@@ -12,18 +12,10 @@ const NavLinks = () => {
           <Link to="/">
             <Button buttonType={"navlinks"}>Home</Button>
           </Link>
-          {!user?.roles.includes("ROLE_ADMIN") && 
-          <Link to="/my-items">
-            <Button buttonType={"navlinks"}>My Items</Button>
-          </Link>
-}
           {user && user.roles.includes("ROLE_ADMIN") && (
             <>
               <Link to="/item-creation-form">
-                <Button buttonType={"navlinks"}>Item Creation Form</Button>
-              </Link>
-              <Link to="/registration-approval">
-                <Button buttonType={"navlinks"}>Registration approval</Button>
+                <Button buttonType={"navlinks"}>Ad Creation Form</Button>
               </Link>
             </>
           )}
