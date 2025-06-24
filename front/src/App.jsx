@@ -5,6 +5,7 @@ import ItemCreationForm from "./pages/ItemCreationFormPage.jsx";
 import NotFound from "./pages/NotFound.jsx";
 import NavLinks from "./components/NavLinks.jsx";
 import ItemsPage from "./pages/ItemsPage.jsx";
+import EditItemPage from "./pages/EditItemPage.jsx";
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/item-creation-form" element={<ItemCreationForm />} />
             <Route path="*" element={<NotFound />} />
+            <Route path="/items/:id/edit" element={<EditItemPage />} />
           </Routes>
         </div>
       </div>

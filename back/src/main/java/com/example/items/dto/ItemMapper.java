@@ -5,11 +5,10 @@ import com.example.items.model.Item;
 
 public class ItemMapper {
 
-
   public static ItemResponseDTO toItemResponseDTO(Item item) {
-    CategoryDTO categoryDTO = null;
+    String category = null;
     if (item.getCategories() != null) {
-      categoryDTO = new CategoryDTO(item.getCategories().getId(), item.getCategories().getName());
+      category = item.getCategories().getName();
     }
     return new ItemResponseDTO(
             item.getId(),
@@ -17,7 +16,7 @@ public class ItemMapper {
             item.getDescription(),
             item.getCity(),
             item.getPrice(),
-            categoryDTO
+            category
     );
   }
 }

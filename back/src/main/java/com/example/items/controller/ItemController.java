@@ -3,8 +3,8 @@ package com.example.items.controller;
 import com.example.items.dto.ItemMapper;
 import com.example.items.dto.ItemRequestDTO;
 import com.example.items.dto.ItemResponseDTO;
-import com.example.items.model.Item;
 import com.example.items.model.Category;
+import com.example.items.model.Item;
 import com.example.items.service.CategoryService;
 import com.example.items.service.ItemService;
 import jakarta.validation.Valid;
@@ -20,7 +20,7 @@ import java.util.Objects;
 
 
 @RestController
-@RequestMapping("/api/item")
+@RequestMapping("/api/items")
 public class ItemController {
 
   private final ItemService itemService;
@@ -39,6 +39,15 @@ public class ItemController {
             .map(ItemMapper::toItemResponseDTO)
             .toList();
     return ResponseEntity.ok(dtos);
+  }
+
+  @GetMapping("/{id}")
+  public ResponseEntity<ItemResponseDTO> getItem(@PathVariable long id) {
+    if (!itemService.existsById(id)) {
+      return ResponseEntity.notFound().build();
+    }
+    Item item = itemService.findById(id);
+    return ResponseEntity.ok(ItemMapper.toItemResponseDTO(item));
   }
 
   @PostMapping

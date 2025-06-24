@@ -1,17 +1,12 @@
 import api from "../utils/api";
 
 export const post = async (data) => {
-  const response = await api.post(`/ads_platform`, data);
+  const response = await api.post(`/items`, data);
 
   return response.data;
 };
 
 export const putData = async (id, data) => {
-  const response = await api.put(`/ads_platform/${id}`, data, {
-    auth: {
-      username: user.username,
-      password: user.password,
-    },
-  });
+  const response = await api.put(`/items/${id}`, data);
   return response.data;
 };

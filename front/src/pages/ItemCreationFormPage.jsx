@@ -121,9 +121,8 @@ const ItemCreationForm = ({ item }) => {
               message: "Price cannot be set to a negative number or 0",
             },
             pattern: {
-              value: /^[0-9]*\.[0-9][0-9]$/,
-              message:
-                "Price must be a number (if decimal - max 2 digits after comma).",
+              value: /^\d+(\.\d{2})?$/,
+              message: "Price must be a valid number (e.g. 100.00 or 100).",
             },
           })}
         />

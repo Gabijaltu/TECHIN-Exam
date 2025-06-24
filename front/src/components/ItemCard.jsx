@@ -9,17 +9,17 @@ function Card({ item }) {
   const { user } = useAuth();
   const { removeItem } = useItemContext();
 
-  const ads = [
+  const items = [
     { label: "Title", value: item.title },
     { label: "Description", value: item.description },
     { label: "City", value: item.city },
     { label: "Price", value: `€${item.price}` },
-    { label: "Category", value: item.category?.name },
+    { label: "Category", value: item.category },
   ];
 
   const deleteItemHandler = async () => {
     const deleteConfirmation = window.confirm(
-      "Are you sure you want to delete this ad?"
+      "Are you sure you want to delete this item?"
     );
     if (deleteConfirmation) {
       try {
@@ -34,17 +34,18 @@ function Card({ item }) {
   return (
     <>
       <div className="m-3 p-2 rounded flex flex-col justify-center items-center bg-[#DEB887] shadow-2xs">
-        {ads.map((ad, index) => (
+        {items.map((item, index) => (
         <p key={index} className="text-gray-800 text-sm mb-1">
-          <strong>{ad.label}:</strong> {ad.value}
+          <strong>{item.label}:</strong> {item.value}
         </p>
         ))}
         {user
           ? user.roles?.includes("ROLE_ADMIN") && (
               <div className="flex">
-                <Link to="/item-creation-form" element={<ItemCreationForm />}>
-                  <Button buttonType={"registration"}>Edit</Button>
-                </Link>
+                <Link to={`/items/${item.id}/edit`}>
+  <Button buttonType={"registration"}>Edit</Button>
+</Link>
+
                 <Button buttonType={"registration"} onClick={deleteItemHandler}>
                   Delete
                 </Button>
