@@ -1,0 +1,8 @@
+{
+  "username": "admin",
+  "password": "password",
+  "roles": [
+    { "id": 1, "name": "ROLE_USER", "authority": "ROLE_USER" },
+    { "id": 2, "name": "ROLE_ADMIN", "authority": "ROLE_ADMIN" }
+  ]
+}
