@@ -4,10 +4,9 @@ import SignUpPage from "./pages/SignUpPage.jsx";
 import NotFound from "./pages/NotFound.jsx";
 import NavLinks from "./components/NavLinks.jsx";
 import EditServicePage from "./pages/EditServicePage.jsx";
-import EditMasterPage from "./pages/EditMasterPage.jsx";
 import ServicesPage from "./pages/ServicesPage.jsx";
 import ServiceCreationForm from "./pages/ServiceCreationFormPage.jsx";
-import MasterCreationForm from "./pages/MasterCreationForm.jsx";
+
 
 function App() {
   return (
@@ -23,12 +22,7 @@ function App() {
               path="/service-creation-form"
               element={<ServiceCreationForm />}
             />
-            {/* <Route
-              path="/master-creation-form"
-              element={<MasterCreationForm />}
-            /> */}
             <Route path="/services/:id/edit" element={<EditServicePage />} />
-            {/* <Route path="/masters/:id/edit" element={<EditMasterPage />} /> */}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
