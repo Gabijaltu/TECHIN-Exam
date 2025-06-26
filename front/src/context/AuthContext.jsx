@@ -55,21 +55,18 @@ export const AuthProvider = ({ children }) => {
 
     const logout = () => {
         setUser(null);
-        // Ištrinam username ir password iš axios
         clearAuth();
         localStorage.removeItem("user");
         navigate("/login");
     };
 
     return (
-        // Paduodas sukurtas funkcijas, tam kad jas būtų galima naudoti betkur su useAuth
         <AuthContext.Provider value={{ user, login, logout, registerUser }}>
             {children}
         </AuthContext.Provider>
     );
 };
 
-// Sukuriamas custom hookas, kuris leidžia naudoti AuthContext
 export const useAuth = () => {
     return useContext(AuthContext);
 };

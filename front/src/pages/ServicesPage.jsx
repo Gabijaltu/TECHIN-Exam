@@ -1,15 +1,14 @@
 import { useState } from "react";
-import Card from "../components/ItemCard";
-import { useItemContext } from "../context/ItemContext";
+import Card from "../components/ServiceCard";
+import { useServiceContext } from "../context/ServiceContext";
 
-function ItemsPage() {
-  const { items, loading, error } = useItemContext();
+function ServicesPage() {
+  const { services, loading, error } = useServiceContext();
 
   const [searchTerm, setSearchTerm] = useState("");
 
-  // Filtruojame items pagal title
-  const filteredItems = items.filter((item) =>
-    item.title.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredServices = services.filter((service) =>
+    service.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
@@ -25,8 +24,13 @@ function ItemsPage() {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 w-full px-3 gap-4">
-        {!error && filteredItems.map((item) => <Card item={item} key={item.id} />)}
-        {error && <div className="pt-5 text-[2rem] text-center">error</div>}
+        {!error &&
+          filteredServices.map((service) => (
+            <Card service={service} key={service.id} />
+          ))}
+        {error && (
+          <div className="pt-5 text-[2rem] text-center">error</div>
+        )}
         {loading && (
           <div className="pt-5 text-[2rem] text-center">loading ...</div>
         )}
@@ -35,4 +39,4 @@ function ItemsPage() {
   );
 }
 
-export default ItemsPage;
+export default ServicesPage;

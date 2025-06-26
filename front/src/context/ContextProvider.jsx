@@ -1,12 +1,12 @@
 import { AuthProvider } from "./AuthContext";
-import { ItemProvider } from "./ItemContext";
+import { ServiceProvider } from "./ServiceContext";
 
 export function ContextProvider({ children }) {
   return (
     <AuthProvider>
-      <ItemProvider>
-        {children}
-      </ItemProvider>
+      <ServiceProvider>
+      {children}
+      </ServiceProvider>
     </AuthProvider>
   );
 }

@@ -9,16 +9,23 @@ const NavLinks = () => {
     <>
       <nav className="flex justify-around items-center bg-slate-600 text-white fixed w-full">
         <div>
-          <Link to="/">
+          <Link to="/services">
             <Button buttonType={"navlinks"}>Home</Button>
           </Link>
           {user && user.roles.includes("ROLE_ADMIN") && (
             <>
-              <Link to="/item-creation-form">
-                <Button buttonType={"navlinks"}>Item Creation Form</Button>
+              <Link to="/service-creation-form">
+                <Button buttonType={"navlinks"}>Service Creation Form</Button>
               </Link>
             </>
           )}
+          {/* {user && user.roles.includes("ROLE_ADMIN") && (
+            <>
+              <Link to="/master-creation-form">
+                <Button buttonType={"navlinks"}>Master Creation Form</Button>
+              </Link>
+            </>
+          )} */}
         </div>
         <div>
           {user ? (
@@ -34,7 +41,7 @@ const NavLinks = () => {
             </>
           ) : (
             <div>
-              <Link to="/login">
+              <Link to="/">
                 <Button buttonType={"navlinks"}>Log In</Button>
               </Link>
               <Link to="/signup">

@@ -1,12 +1,11 @@
 import api from "../utils/api";
 
-export const post = async (data) => {
-  const response = await api.post(`/items`, data);
-
+export const postService = async (data) => {
+  const response = await api.post(`/services`, data);
   return response.data;
 };
 
-export const putData = async (id, data) => {
-  const response = await api.put(`/items/${id}`, data);
+export const postMaster = async (data) => {
+  const response = await api.post(`/masters`, data);
   return response.data;
 };

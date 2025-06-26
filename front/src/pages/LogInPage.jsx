@@ -77,7 +77,6 @@ const LogInPage = () => {
                 />
                   <p className="text-red-500">{errors.password?.message}</p>
                 <div>
-                  {/* Shows errors coming from error state */}
                   {error && <p className="text-red-500">{error}</p>}
                 </div>
               </div>
