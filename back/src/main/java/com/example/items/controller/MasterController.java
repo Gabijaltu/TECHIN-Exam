@@ -48,7 +48,7 @@ public class MasterController {
   }
 
 
-  @DeleteMapping("/categories/{id}")
+  @DeleteMapping("/{id}")
   public ResponseEntity<Void> deleteMaster(@PathVariable long id) {
     if (!masterService.existsMasterById(id)) {
       return ResponseEntity.notFound().build();
