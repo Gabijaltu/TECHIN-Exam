@@ -64,7 +64,6 @@ public class ServiceMapper {
     if (dto.manager() != null) service.setManager(dto.manager());
 
     if (dto.masters() != null) {
-      // Išvalom senus masters, priskiriam naujus
       service.getMasters().clear();
 
       List<Master> masters = dto.masters().stream()
