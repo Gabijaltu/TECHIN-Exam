@@ -53,48 +53,4 @@ public class ServiceService {
   public Optional<Service> findById(long id) {
     return serviceRepository.findById(id);
   }
-
-
-//  public boolean existsItemById(long id) {
-//    return masterRepository.existsById(id);
-//  }
-//
-//  public Optional<Master> findItemById(long id) {
-//    return masterRepository.findById(id);
-//  }
-//
-//  public Master saveItem(Master master) {
-//    return masterRepository.save(master);
-//  }
-//
-//  public void deleteItemById(long id) {
-//    masterRepository.deleteById(id);
-//  }
-//
-//  public boolean existsById(long id) {
-//    return masterRepository.existsById(id);
-//  }
-//
-//  public Master findById(long id) {
-//    return masterRepository.findById(id).get();
-//  }
-
-//  public List<Item> findAllItemsByTitleContaining(String title) {
-//    return itemRepository.findAllByTitleContaining(title);
-//  }
-
-//  public List<Item> findAllItemsByDescription(String description) {
-//    return itemRepository.findAllByDescription(description);
-//  }
-
-//  public Page<Item> findAllItemsPage(int page, int size, String sort) {
-//    if (sort == null) {
-//      Pageable pageable = PageRequest.of(page, size);
-//
-//      return itemRepository.findAll(pageable);
-//    }
-//
-//    Pageable pageable = PageRequest.of(page, size, Sort.by(sort));
-//    return itemRepository.findAll(pageable);
-//  }
 }
