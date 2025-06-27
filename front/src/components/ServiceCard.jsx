@@ -12,7 +12,6 @@ function Card({ service }) {
     { label: "Title", value: service.title },
     { label: "Address", value: service.address },
     { label: "Manager", value: service.manager },
-    // pridėk kitus laukus, jei reikia
   ];
 
   const deleteServiceHandler = async () => {
@@ -34,8 +33,6 @@ function Card({ service }) {
           <strong>{ad.label}:</strong> {ad.value}
         </p>
       ))}
-
-      {/* Masters sekcija */}
       {service.masters && service.masters.length > 0 && (
         <div className="mt-3 w-full">
           <strong className="block mb-1">Masters:</strong>
