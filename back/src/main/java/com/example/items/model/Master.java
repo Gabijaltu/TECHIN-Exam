@@ -30,8 +30,6 @@ public class Master {
     this.service = service;
   }
 
-  // Getters and setters
-
   public long getId() {
     return id;
   }
