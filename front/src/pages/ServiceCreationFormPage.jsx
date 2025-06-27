@@ -22,10 +22,7 @@ const ServiceCreationForm = ({ service }) => {
     },
   });
 
-  // Masters list state
   const [masters, setMasters] = useState([]);
-
-  // New master inputs state
   const [newMaster, setNewMaster] = useState({
     name: "",
     surname: "",
@@ -43,7 +40,6 @@ const ServiceCreationForm = ({ service }) => {
     }
   }, [service, setValue]);
 
-  // Add new master to the list
   const addMaster = () => {
     if (!newMaster.name.trim() || !newMaster.surname.trim()) {
       setError("Name and surname are required for master");
@@ -54,7 +50,6 @@ const ServiceCreationForm = ({ service }) => {
     setError("");
   };
 
-  // Remove master by index
   const removeMaster = (index) => {
     setMasters(masters.filter((_, i) => i !== index));
   };
