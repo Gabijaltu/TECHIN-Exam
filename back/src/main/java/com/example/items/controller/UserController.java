@@ -33,7 +33,6 @@ public class UserController {
   @PostMapping("/auth/register")
   public ResponseEntity<?> createUser(@Valid @RequestBody UserRequestDTO userRequestDTO) {
     if (userService.existsByUsername(userRequestDTO.username())) {
-      // Return 409 Conflict if username already exists
       return ResponseEntity
               .status(HttpStatus.CONFLICT)
               .body("Username already taken");
